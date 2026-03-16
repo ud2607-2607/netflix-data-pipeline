@@ -5,7 +5,7 @@ An end-to-end data pipeline on Google Cloud Platform that simulates Netflix watc
 ## How It Works
 - **publisher.py** — generates 50 simulated Netflix watch events (movies + TV shows) and publishes them as JSON to a Pub/Sub topic
 - **main.py** — Cloud Function that automatically triggers on each message, parses the JSON, and loads data into BigQuery
-- **queries/** — analytical SQL queries run on top of the BigQuery data
+- **analytics/** — analytical SQL queries run on top of the BigQuery data
 
 ## Tech Stack
 - Google Cloud Pub/Sub
@@ -14,7 +14,32 @@ An end-to-end data pipeline on Google Cloud Platform that simulates Netflix watc
 - Python, SQL
 
 ## Data Model (Star Schema)
-[paste your diagram here]
+┌─────────────────┐
+                    │   fact_watches  │
+                    │─────────────────│
+                    │ watch_id (PK)   │
+                    │ user_id (FK)    │
+                    │ content_id (FK) │
+                    │ watch_duration  │
+                    │ total_duration  │
+                    │ completed       │
+                    │ is_rewatch      │
+                    │ rating          │
+                    │ timestamp       │
+                    └────────┬────────┘
+                             │
+          ┌──────────────────┼──────────────────┐
+          │                                     │
+┌─────────▼────────┐                  ┌─────────▼────────┐
+│   dim_users      │                  │   dim_content    │
+│──────────────────│                  │──────────────────│
+│ user_id (PK)     │                  │ content_id (PK)  │
+│ age_group        │                  │ content_title    │
+│ country          │                  │ content_type     │
+│ device           │                  │ genre            │
+└──────────────────┘                  │ season           │
+                                      │ episode          │
+                                      └──────────────────┘
 
 ## Sample Queries
 - Total watch events by country
