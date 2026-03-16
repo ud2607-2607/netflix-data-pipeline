@@ -1,6 +1,13 @@
 # 🎬 Netflix Streaming Data Pipeline
 
-An end-to-end data pipeline on Google Cloud Platform that simulates Netflix watch events flowing through Pub/Sub → Cloud Functions → BigQuery for analytics.
+Engineered an end-to-end serverless data pipeline on Google Cloud Platform (GCP) to ingest, process, and analyze simulated real-time Netflix user engagement events (heartbeats).
+
+# Architecture
+- Data Generation -> publisher.py generates simulated data for user events.
+- Ingestion: Used Cloud Pub/Sub for message streaming
+- Processing: Used Cloud function triggered by Pub/Sub to clean JSON data and inject metadata into BigQuery
+- Storage & Analytics: Architected a STAR schema for the database in BigQuery and wrote SQL scripts to analyze the simulated data.
+- Observability: Used Cloud Logging for error handling and tracking. 
 
 ## How It Works
 - **publisher.py** — generates 50 simulated Netflix watch events (movies + TV shows) and publishes them as JSON to a Pub/Sub topic
