@@ -14,9 +14,9 @@ An end-to-end data pipeline on Google Cloud Platform that simulates Netflix watc
 - Python, SQL
 
 ## Data Model (Star Schema)
-fact_watches table -> watch_id (PK), user_id (FK), content_id (FK), watch_duration, total_duration, completed, is_rewatch, rating, timestamp
-dim_users table -> user_id (PK), age_group, country, device 
-dim_content table -> content_id(PK), content_title, content_type, genre, season, episode 
+- fact_watches table -> watch_id (PK), user_id (FK), content_id (FK), watch_duration, total_duration, completed, is_rewatch, rating, timestamp
+- dim_users table -> user_id (PK), age_group, country, device 
+- dim_content table -> content_id(PK), content_title, content_type, genre, season, episode 
 
 ## Sample Queries
 - Total watch events by country
