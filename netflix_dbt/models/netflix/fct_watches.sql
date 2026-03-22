@@ -13,6 +13,8 @@ content as (
 
 select
     w.watch_id,
+    u.user_id,
+    w.content_id,
     w.timestamp,
     w.total_duration_min,
     w.rating,
@@ -25,4 +27,6 @@ select
 from watches w
 left join users u on w.user_id = u.user_id
 left join content c on w.content_id = c.content_id 
+qualify row_number() over (partition by w.watch_id order by w.timestamp) = 1
+
 

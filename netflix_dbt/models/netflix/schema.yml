@@ -1,0 +1,20 @@
+
+version: 2
+
+models:
+  - name: fct_watches 
+    description: "Fact table that captures user watch events"
+    columns:
+      - name: watch_id
+        description: "Unique identifier for each watch event"
+        data_tests:
+          - unique
+          - not_null
+      - name: user_id
+        description: "Identifier for the user who watched the content"
+        data_tests:
+          - not_null
+      - name: content_id
+        description: "Identifier for the content that was watched"
+        data_tests:
+          - not_null 
