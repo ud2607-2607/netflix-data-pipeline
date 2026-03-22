@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: netflix_dataset
+    database: netflix-pipeline-490116
+    schema: netflix_dataset
+    tables:
+      - name: fact_watches
+      - name: dim_users
+      - name: dim_content
