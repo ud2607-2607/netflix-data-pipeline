@@ -23,7 +23,16 @@ Engineered an end-to-end serverless data pipeline on Google Cloud Platform (GCP)
 ## Data Model (Star Schema)
 - fact_watches table -> watch_id (PK), user_id (FK), content_id (FK), watch_duration, total_duration, completed, is_rewatch, rating, timestamp
 - dim_users table -> user_id (PK), age_group, country, device 
-- dim_content table -> content_id(PK), content_title, content_type, genre, season, episode 
+- dim_content table -> content_id(PK), content_title, content_type, genre, season, episode
+
+## Data Modeling Architecture (dbt)
+The project utilizes a multi-layered modeling approach within **BigQuery**:
+*   **Sources (`sources.yml`):** Defines the raw database for streaming Netflix metadata.
+*   **Staging/Transformation (`fct_watches.sql`):** Cleanses and transforms the exisisting tables and joins three tables to create a new table to perform analysis on. 
+*   **Analytics Marts (`agg_*.sql`):** Pre-aggregated models that are 'views' optimized for specific business questions:
+    *   `agg_most_watched_title`: Identifies content performance trends.
+    *   `agg_watches_by_country`: Provides geographic engagement distribution.
+*   **Testing & Documentation (`schema.yml`):** Enforces data integrity with `unique`, `not_null`, and relationship tests on primary keys.
 
 ## Sample Queries
 - Total watch events by country
@@ -34,4 +43,5 @@ Engineered an end-to-end serverless data pipeline on Google Cloud Platform (GCP)
 1. Clone the repo
 2. Create GCP project and enable APIs (Pub/Sub, Cloud Functions, BigQuery)
 3. Deploy Cloud Function: `gcloud functions deploy process_watch_events --runtime python311 --trigger-topic netflix-watch-events --entry-point process_watch_events --region us-central1`
-4. Run publisher: `python3 publisher.py`
+4. Run dbt tests: dbt run --select {agg_most_watched_title}
+5. Run publisher: `python3 publisher.py`
