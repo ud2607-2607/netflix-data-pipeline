@@ -51,7 +51,7 @@ def generate_event():
                  - datetime.timedelta(days=days_ago, hours=hours_ago)).isoformat()
 
     event = {
-        "user_id": f"user_{random.randint(1, 200)}",
+        "user_id": f"user_{random.randint(1, 1000)}",
         "country": random.choice(COUNTRIES),
         "age_group": random.choice(AGE_GROUPS),
         "device": random.choice(DEVICES),
@@ -72,7 +72,7 @@ def generate_event():
 
     return event
 
-NUM_EVENTS = 50
+NUM_EVENTS = 5000
 
 print(f"🚀 Publishing {NUM_EVENTS} events to {topic_id}...")
 
